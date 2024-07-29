@@ -1,0 +1,10 @@
+# Code Editor 
+.vscode
+.idea
+
+# Docker
+.dockerignore
+
+# Env
+.env
+venv 
