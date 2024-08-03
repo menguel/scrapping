@@ -1,4 +1,5 @@
 import webbrowser
+from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 import re
 
@@ -35,39 +36,27 @@ def run(pw, bright_data=False, headless=False):
         
     page = browser.new_page()
     
-    page.route("**/*", route_intercept)
+    # page.route("**/*", route_intercept)
     
     if bright_data and not headless:
         open_debug_view(page)
-    
-    page.goto("https://www.airbnb.fr")
-    page.wait_for_timeout(1000)
+    url = "https://www.airbnb.fr/s/Rio-de-Janeiro--Rio-de-Janeiro--Br%C3%A9sil/homes?tab_id=home_tab&refinement_paths%5B%5D=%2Fhomes&flexible_trip_lengths%5B%5D=one_week&monthly_start_date=2024-09-01&monthly_length=3&monthly_end_date=2024-10-01&price_filter_input_type=0&channel=EXPLORE&query=Rio%20de%20Janeiro%2C%20Br%C3%A9sil&place_id=ChIJW6AIkVXemwARTtIvZ2xC3FA&location_bb=wbX34MIsYzvBuKhowi8uJA%3D%3D&date_picker_type=monthly_stay&adults=1&source=structured_search_input_header&search_type=autocomplete_click"
+    page.goto(url)
     page.get_by_role("button", name="Continuer sans accepter").click()
-    page.wait_for_timeout(1000)
-    page.get_by_test_id("structured-search-input-field-query").click()
-    page.wait_for_timeout(1000)
-    page.get_by_test_id("structured-search-input-field-query").fill("rio")
-    page.wait_for_timeout(1000)
-    page.get_by_text("Rio de Janeiro, Brésil").click()
-    page.wait_for_timeout(1000)
-    page.locator("td").filter(has_text=re.compile(r"^5$")).nth(2).click()
-    page.wait_for_timeout(1000)
-    page.locator("td").filter(has_text=re.compile(r"^9$")).nth(2).click()
-    page.wait_for_timeout(1000)
-    page.get_by_test_id("structured-search-input-search-button").click()
-    page.wait_for_timeout(1000)
-    page_number = 1
-    while True:
-        print(f"Navigating to page {page_number}")
-        next_page_button = page.get_by_label("Suivant", exact=True)
-        if next_page_button.get_attribute("aria-disabled") == 'true': # On vérifie si l'on a attend la derniere page du catalogue
-            break
-
-        page_number += 1
-        page.wait_for_timeout(1000)
-        next_page_button.click()
-
-    page.wait_for_timeout(1000)
+    # page.get_by_test_id("structured-search-input-field-query").click()
+    # page.get_by_test_id("structured-search-input-field-query").fill("Rio de janeiro")
+    # page.get_by_test_id("option-0").click()
+    # page.get_by_test_id("expanded-searchbar-dates-months-tab").click()
+    # page.get_by_test_id("monthly-dial-dot-1").click()
+    # page.get_by_test_id("structured-search-input-field-guests-button").click()
+    # page.get_by_test_id("stepper-adults-increase-button").click()
+    # page.get_by_test_id("structured-search-input-search-button").click()
+    # page.get_by_test_id("little-search").click()
+    
+    html_content = page.content() # Pour voir le contenu de la page 
+    soup = BeautifulSoup(html_content, "html.parser")
+    print(soup.prettify())
+        
     browser.close()
 
 if __name__ == '__main__':
