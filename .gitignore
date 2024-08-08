@@ -7,4 +7,5 @@
 
 # Env
 .env
-venv 
+venv
+.venv
