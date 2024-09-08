@@ -1,0 +1,33 @@
+Présences :
+    Jospeh ELONO
+    Micaelle Nzoueteng
+    Léonie Ouafo 
+
+Agenda :
+    Tour des projets web et mobile :
+
+    API Gateway :
+    - Done :
+        * RAS 
+    - Ongoing :
+        * Rendre la Gateway disponible sur internet
+    - Diff :
+        * RAS 
+
+    
+    webfrontend :
+    - Ongoing :
+        * Conception de la page d'authentification
+    - Diff :
+        * RAS 
+
+    irex user :
+    - Ongoing :
+        * Dockeriser le projet user 
+    - Diff :
+        * Base de données PostgreSQL
+    - To Do :
+        * Résoudre le problème
+
+        
+    
